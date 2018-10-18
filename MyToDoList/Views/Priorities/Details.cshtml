@@ -1,0 +1,26 @@
+﻿@model MyToDoList.Priorities
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Priorities</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descryption)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descryption)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PriorityId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

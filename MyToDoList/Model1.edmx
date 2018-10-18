@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ToDoListModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Priorities">
+          <Key>
+            <PropertyRef Name="PriorityId" />
+          </Key>
+          <Property Name="PriorityId" Type="int" Nullable="false" />
+          <Property Name="Descryption" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="TaskId" />
+          </Key>
+          <Property Name="TaskId" Type="int" Nullable="false" />
+          <Property Name="Task" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateDue" Type="date" />
+          <Property Name="Priority" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Task_Priorities">
+          <End Role="Priorities" Type="Self.Priorities" Multiplicity="1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Priorities">
+              <PropertyRef Name="PriorityId" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="Priority" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ToDoListModelStoreContainer">
+          <EntitySet Name="Priorities" EntityType="Self.Priorities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Task_Priorities" Association="Self.FK_Task_Priorities">
+            <End Role="Priorities" EntitySet="Priorities" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ToDoListModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Priorities">
+          <Key>
+            <PropertyRef Name="PriorityId" />
+          </Key>
+          <Property Name="PriorityId" Type="Int32" Nullable="false" />
+          <Property Name="Descryption" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Task" Relationship="Self.FK_Task_Priorities" FromRole="Priorities" ToRole="Task" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="TaskId" />
+          </Key>
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="Task1" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateDue" Type="DateTime" Precision="0" />
+          <Property Name="Priority" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Priorities" Relationship="Self.FK_Task_Priorities" FromRole="Task" ToRole="Priorities" />
+        </EntityType>
+        <Association Name="FK_Task_Priorities">
+          <End Role="Priorities" Type="Self.Priorities" Multiplicity="1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Priorities">
+              <PropertyRef Name="PriorityId" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="Priority" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ToDoListEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Priorities" EntityType="Self.Priorities" />
+          <EntitySet Name="Task" EntityType="Self.Task" />
+          <AssociationSet Name="FK_Task_Priorities" Association="Self.FK_Task_Priorities">
+            <End Role="Priorities" EntitySet="Priorities" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ToDoListModelStoreContainer" CdmEntityContainer="ToDoListEntities">
+          <EntitySetMapping Name="Priorities">
+            <EntityTypeMapping TypeName="ToDoListModel.Priorities">
+              <MappingFragment StoreEntitySet="Priorities">
+                <ScalarProperty Name="PriorityId" ColumnName="PriorityId" />
+                <ScalarProperty Name="Descryption" ColumnName="Descryption" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Task">
+            <EntityTypeMapping TypeName="ToDoListModel.Task">
+              <MappingFragment StoreEntitySet="Task">
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="Task1" ColumnName="Task" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DateDue" ColumnName="DateDue" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
